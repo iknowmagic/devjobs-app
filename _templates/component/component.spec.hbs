@@ -1,0 +1,9 @@
+import Component from '../{{name}}.vue'
+
+describe('{{name}}', () => {
+
+  it('Component exists', () => {
+    const wrapper = shallowWrap(Component)
+    expect(wrapper.exists()).toBeTruthy()
+  })
+})

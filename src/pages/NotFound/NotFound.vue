@@ -1,6 +1,5 @@
 <script setup lang="ts"></script>
 
 <template>
-  App
-  <router-view />
+  <div>NotFound</div>
 </template>
