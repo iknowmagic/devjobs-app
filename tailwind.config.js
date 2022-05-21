@@ -1,31 +1,23 @@
 module.exports = {
-  content: [
-    './index.html',
-    './src/**/*.{vue,js,ts,jsx,tsx}'
-  ],
+  content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
   theme: {
     extend: {
       screens: {
-        sm: '480px',
+        sm: '375px',
         md: '768px',
-        lg: '976px',
-        xl: '1440px'
+        lg: '1440px'
       },
-      fontFamily: {
-
+      backgroundImage: {
+        'header-lg': "url('/assets/desktop/bg-pattern-header.svg')",
+        'logo-lg': "url('/assets/desktop/logo.svg')"
       },
-      colors: {
-
-      },
+      fontFamily: {},
+      colors: {},
       padding: {},
       margin: {},
-      fontSize: {
-
-      }
+      fontSize: {}
     }
   },
-  shortcuts: {
-
-  },
+  shortcuts: {},
   plugins: [require('@tailwindcss/forms'), require('@tailwindcss/typography')]
 }
