@@ -7,3 +7,4 @@ dist-ssr
 /coverage.data
 /coverage/
 cookies.txt
+.vercel

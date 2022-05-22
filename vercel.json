@@ -1,0 +1,10 @@
+{
+  "functions": {
+    "api/getJobs.ts": {
+      "includeFiles": "_files/**"
+    },
+    "api/getLocations.ts": {
+      "includeFiles": "_files/**"
+    }
+  }
+}
