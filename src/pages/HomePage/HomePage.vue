@@ -1,4 +1,6 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import MultiSelect from '@/components/MultiSelect'
+</script>
 
 <template>
   <main class="h-[100vh] w-full bg-[#F4F6F8]">
@@ -12,9 +14,9 @@
 
       <div class="text-right">hello</div>
       <section
-        class="col-span-2 mt-[45px] grid h-[80px] grid-cols-3 items-center rounded-lg bg-white px-[32px]"
+        class="col-span-2 mt-[45px] grid h-fit min-h-[80px] grid-cols-3 items-center rounded-lg bg-white px-[32px]"
       >
-        filter
+        <MultiSelect />
       </section>
     </header>
     <section></section>

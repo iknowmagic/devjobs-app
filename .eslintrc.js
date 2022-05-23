@@ -21,7 +21,8 @@ module.exports = {
 
     'prettier/prettier': ['warn'],
 
-    '@typescript-eslint/no-unused-vars': 'warn'
+    '@typescript-eslint/no-unused-vars': 'warn',
+    'vue/v-on-event-hyphenation': ['error', 'never']
   },
   overrides: [
     {
