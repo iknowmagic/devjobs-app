@@ -3,7 +3,7 @@ import MultiSelect from '@/components/MultiSelect'
 </script>
 
 <template>
-  <main class="h-[100vh] w-full bg-[#F4F6F8]">
+  <main class="h-[100vh] w-full bg-[#F4F6F8] font-display">
     <header
       class="grid h-[162px] w-full grid-cols-2 justify-evenly bg-header-lg bg-cover bg-no-repeat px-[165px] pt-[45px]"
     >
@@ -16,7 +16,14 @@ import MultiSelect from '@/components/MultiSelect'
       <section
         class="col-span-2 mt-[45px] grid h-fit min-h-[80px] grid-cols-3 items-center rounded-lg bg-white px-[32px]"
       >
-        <MultiSelect />
+        <div class="flex items-center gap-2">
+          <img
+            src="/assets/desktop/icon-location.svg"
+            alt="location"
+            class="h-[24px] w-[17px]"
+          />
+          <MultiSelect placeholder="Filter by location..." />
+        </div>
       </section>
     </header>
     <section></section>

@@ -11,7 +11,9 @@ module.exports = {
         'header-lg': "url('/assets/desktop/bg-pattern-header.svg')",
         'logo-lg': "url('/assets/desktop/logo.svg')"
       },
-      fontFamily: {},
+      fontFamily: {
+        display: ['Kumbh Sans']
+      },
       colors: {},
       padding: {},
       margin: {},

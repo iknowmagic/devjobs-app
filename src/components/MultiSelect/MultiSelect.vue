@@ -4,6 +4,9 @@ import { ref } from 'vue'
 import DropDown from './DropDown.vue'
 
 import { OnClickOutside } from '@vueuse/components'
+import { useTimeoutFn } from '@vueuse/core'
+
+import sLoading from '@/components/sLoading'
 
 const selectedItems = ref<string[]>([])
 const items = ref(['john', 'milos', 'steph', 'kathreine'].sort())
@@ -17,6 +20,12 @@ const addTag = (item: string) => {
   items.value.sort()
   selectedItems.value.push(item)
   selectedItems.value.sort()
+
+  if (items.value.length === 0) {
+    useTimeoutFn(() => {
+      dropdown.value = false
+    }, 1500)
+  }
 }
 const removeTag = (item: string) => {
   items.value.push(item)
@@ -24,11 +33,29 @@ const removeTag = (item: string) => {
   selectedItems.value = selectedItems.value.filter(i => i !== item)
   selectedItems.value.sort()
 }
+
+interface Props {
+  placeholder: string
+  width: number
+  loading: boolean
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  placeholder: null as unknown as string,
+  width: 250,
+  loading: false
+})
 </script>
 
 <template>
   <OnClickOutside @trigger="dropdown = false">
-    <div class="autocomplete-wrapper">
+    <div
+      :class="[
+        'autocomplete-wrapper',
+        `max-w-[${width}px]`,
+        `min-w-[${width}px]`
+      ]"
+    >
       <div class="autocomplete">
         <div class="mx-auto flex w-full flex-col items-center">
           <div class="w-full">
@@ -73,8 +100,10 @@ const removeTag = (item: string) => {
                     </template>
                     <div class="flex-1">
                       <input
-                        placeholder=""
-                        class="h-full w-full appearance-none bg-transparent p-1 px-2 text-gray-800 outline-none"
+                        :placeholder="
+                          selectedItems.length === 0 ? props.placeholder : ''
+                        "
+                        class="h-full w-full appearance-none bg-transparent p-1 px-2 text-gray-800 outline-none placeholder:text-slate-400"
                       />
                     </div>
                   </div>
@@ -86,7 +115,9 @@ const removeTag = (item: string) => {
                       class="h-6 w-6 cursor-pointer text-gray-600 outline-none focus:outline-none"
                       :class="{ 'rotate-180 pl-[7px]': dropdown }"
                     >
+                      <sLoading v-if="loading" />
                       <svg
+                        v-else
                         xmlns="http://www.w3.org/2000/svg"
                         width="100%"
                         height="100%"
@@ -108,7 +139,12 @@ const removeTag = (item: string) => {
           </div>
         </div>
         <Transition>
-          <DropDown v-if="dropdown" :list="items" @addItem="addTag" />
+          <DropDown
+            v-if="dropdown"
+            :list="items"
+            :width="width"
+            @addItem="addTag"
+          />
         </Transition>
       </div>
     </div>

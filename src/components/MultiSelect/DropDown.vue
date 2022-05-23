@@ -1,12 +1,14 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 
 interface Props {
   list: null | string[]
+  width: number
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  list: null
+  list: null,
+  width: 250
 })
 
 const emit = defineEmits(['addItem'])
@@ -17,7 +19,8 @@ const addItem = (item: string) => {
 
 <template>
   <div
-    class="top-100 lef-0 max-h-select absolute z-40 w-full max-w-[362px] overflow-y-auto rounded bg-white shadow"
+    class="max-h-select absolute z-40 w-full overflow-y-auto rounded bg-white shadow"
+    :class="[`max-w-[${width}px]`, `min-w-[${width}px]`]"
   >
     <div class="flex w-full flex-col">
       <template v-for="(item, key) in props.list" :key="key">
