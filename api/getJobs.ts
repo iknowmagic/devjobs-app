@@ -1,6 +1,7 @@
 import json from './data.json'
 
 import { JobsInterface, SingleJobInterface } from '../types'
+import { VercelRequest, VercelResponse } from '@vercel/node'
 
 const paginator = (
   _data: SingleJobInterface[],
@@ -25,9 +26,9 @@ const paginator = (
   }
 }
 
-export default (req, res) => {
+export default (req: VercelRequest, res: VercelResponse) => {
   let data: SingleJobInterface[]
-  if (req.query.search) {
+  if (typeof req.query.search === 'string') {
     const search = req.query.search.toLowerCase()
     data = json.filter(item => {
       return (
