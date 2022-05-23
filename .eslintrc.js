@@ -12,19 +12,19 @@ module.exports = {
   },
   extends: [
     'plugin:sonarjs/recommended',
+    'plugin:vue/vue3-recommended',
     'eslint:recommended',
     '@vue/standard',
     '@vue/typescript/recommended',
-    'plugin:vue/vue3-recommended',
     '@vue/prettier',
     // 'plugin:vuejs-accessibility/recommended',
     'plugin:prettier/recommended'
   ],
   plugins: [
+    'vue',
     'sonarjs',
     'simple-import-sort',
     'vuejs-accessibility',
-    'vue',
     'prettier'
   ],
   rules: {
