@@ -1,7 +1,7 @@
 {
-  "name": "base-project-2",
+  "name": "devjobs-app",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
