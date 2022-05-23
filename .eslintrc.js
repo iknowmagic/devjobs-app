@@ -1,9 +1,13 @@
+/* eslint-env node */
+require('@rushstack/eslint-patch/modern-module-resolution')
+
 module.exports = {
   root: true,
   env: {
     browser: true,
     es2021: true,
-    node: true
+    node: true,
+    'vue/setup-compiler-macros': true
   },
   parser: 'vue-eslint-parser',
   parserOptions: {
@@ -11,19 +15,19 @@ module.exports = {
     ecmaVersion: 2021
   },
   extends: [
-    'plugin:sonarjs/recommended',
-    'plugin:vue/vue3-recommended',
     'eslint:recommended',
+    'plugin:sonarjs/recommended',
     '@vue/standard',
-    '@vue/typescript/recommended',
-    '@vue/prettier',
+    'plugin:vue/vue3-recommended',
+    '@vue/eslint-config-typescript/recommended',
+    '@vue/eslint-config-prettier',
     // 'plugin:vuejs-accessibility/recommended',
     'plugin:prettier/recommended'
   ],
   plugins: [
-    'vue',
     'sonarjs',
     'simple-import-sort',
+    'vue',
     'vuejs-accessibility',
     'prettier'
   ],
@@ -35,7 +39,7 @@ module.exports = {
 
     'prettier/prettier': ['warn'],
 
-    '@typescript-eslint/no-unused-vars': 'warn',
+    '@typescript-eslint/no-unused-vars': 'off',
     'vue/v-on-event-hyphenation': ['error', 'never']
   },
   overrides: [
