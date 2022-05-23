@@ -15,7 +15,7 @@
     "sourceMap": true,
     "strict": true,
     "target": "esnext",
-    "types": ["vite/client", "@types/jest", "node", "vitest/globals"],
+    "types": ["vite/client", "node", "vitest/globals"],
     "useDefineForClassFields": true
     // "skipLibCheck": true
   },

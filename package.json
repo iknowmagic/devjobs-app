@@ -9,7 +9,8 @@
     "test": "vitest",
     "component": "plop component components",
     "page": "plop component pages",
-    "layout": "plop component layouts"
+    "layout": "plop component layouts",
+    "lint": "eslint --ext .ts,vue --ignore-path .gitignore ."
   },
   "dependencies": {
     "@vueuse/components": "^8.5.0",
@@ -44,7 +45,10 @@
     "eslint-plugin-simple-import-sort": "^7.0.0",
     "eslint-plugin-sonarjs": "^0.13.0",
     "eslint-plugin-vue": "^9.0.1",
+    "eslint-plugin-vuejs-accessibility": "^1.1.1",
     "flush-promises": "^1.0.2",
+    "husky": "^8.0.1",
+    "lint-staged": "^12.4.1",
     "plop": "^3.1.0",
     "postcss": "^8.4.14",
     "prettier": "^2.6.2",
@@ -59,5 +63,13 @@
     "vue-router": "^4.0.15",
     "vue-router-mock": "^0.1.7",
     "vue-tsc": "^0.34.7"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{ts,vue}": "eslint --fix"
   }
 }

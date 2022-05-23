@@ -1,18 +1,32 @@
 module.exports = {
   root: true,
   env: {
+    browser: true,
+    es2021: true,
     node: true
   },
   parser: 'vue-eslint-parser',
+  parserOptions: {
+    parser: '@typescript-eslint/parser',
+    ecmaVersion: 2021
+  },
   extends: [
     'plugin:sonarjs/recommended',
-    'plugin:vue/vue3-recommended',
     'eslint:recommended',
     '@vue/standard',
     '@vue/typescript/recommended',
+    'plugin:vue/vue3-recommended',
+    '@vue/prettier',
+    // 'plugin:vuejs-accessibility/recommended',
     'plugin:prettier/recommended'
   ],
-  plugins: ['vue', 'sonarjs', 'simple-import-sort', 'prettier'],
+  plugins: [
+    'sonarjs',
+    'simple-import-sort',
+    'vuejs-accessibility',
+    'vue',
+    'prettier'
+  ],
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',

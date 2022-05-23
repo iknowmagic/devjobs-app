@@ -17,7 +17,7 @@ const addItem = (item: string) => {
 
 <template>
   <div
-    class="top-100 lef-0 max-h-select absolute z-40 w-full max-w-[332px] overflow-y-auto rounded bg-white shadow"
+    class="top-100 lef-0 max-h-select absolute z-40 w-full max-w-[362px] overflow-y-auto rounded bg-white shadow"
   >
     <div class="flex w-full flex-col">
       <template v-for="(item, key) in props.list" :key="key">
