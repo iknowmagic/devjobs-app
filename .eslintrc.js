@@ -40,7 +40,8 @@ module.exports = {
     'prettier/prettier': ['warn'],
 
     '@typescript-eslint/no-unused-vars': 'off',
-    'vue/v-on-event-hyphenation': ['error', 'never']
+    'vue/v-on-event-hyphenation': ['error', 'never'],
+    'sonarjs/no-identical-functions': 'warn'
   },
   overrides: [
     {

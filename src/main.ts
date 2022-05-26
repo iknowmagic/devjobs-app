@@ -5,6 +5,7 @@ import '@/styles/main.scss'
 import mitt from 'mitt'
 import router from '@/router'
 import store from '@/store'
+import globalComponents from '@/components/global'
 
 const mountApp = async () => {
   const app = createApp(App)
@@ -12,6 +13,8 @@ const mountApp = async () => {
   const emitter = mitt()
 
   app.use(router).use(store)
+
+  globalComponents(app)
 
   app.provide('emitter', emitter)
 

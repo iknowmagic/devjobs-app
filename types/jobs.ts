@@ -28,6 +28,6 @@ export interface JobsInterface {
   nextPage: null | number
 }
 
-export interface Locations {
+export interface LocationsInterface {
   [index: number]: string
 }

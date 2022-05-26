@@ -1,1 +1,1 @@
-export { JobsInterface, Locations, SingleJobInterface } from './jobs'
+export { JobsInterface, LocationsInterface, SingleJobInterface } from './jobs'

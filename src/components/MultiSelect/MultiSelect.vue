@@ -4,13 +4,32 @@ import { ref } from 'vue'
 import DropDown from './DropDown.vue'
 
 import { OnClickOutside } from '@vueuse/components'
-import { useTimeoutFn } from '@vueuse/core'
+import { useTimeoutFn, useVModel } from '@vueuse/core'
 
 import sLoading from '@/components/sLoading'
 
-const selectedItems = ref<string[]>([])
-const items = ref(['john', 'milos', 'steph', 'kathreine'].sort())
 const dropdown = ref(false)
+
+interface Props {
+  placeholder?: string
+  width?: number
+  loading?: boolean
+  items: string[]
+  selectedItems: string[]
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  placeholder: null as unknown as string,
+  width: 250,
+  loading: false,
+  items: () => [],
+  selectedItems: () => []
+})
+
+const emit = defineEmits(['update:items', 'update:selectedItems'])
+
+const items = useVModel(props, 'items', emit)
+const selectedItems = useVModel(props, 'selectedItems', emit)
 
 const toggleDropdown = () => {
   dropdown.value = !dropdown.value
@@ -33,18 +52,6 @@ const removeTag = (item: string) => {
   selectedItems.value = selectedItems.value.filter(i => i !== item)
   selectedItems.value.sort()
 }
-
-interface Props {
-  placeholder: string
-  width: number
-  loading: boolean
-}
-
-const props = withDefaults(defineProps<Props>(), {
-  placeholder: null as unknown as string,
-  width: 250,
-  loading: false
-})
 </script>
 
 <template>
@@ -52,8 +59,8 @@ const props = withDefaults(defineProps<Props>(), {
     <div
       :class="[
         'autocomplete-wrapper',
-        `max-w-[${width}px]`,
-        `min-w-[${width}px]`
+        `max-w-[${props.width}px]`,
+        `min-w-[${props.width}px]`
       ]"
     >
       <div class="autocomplete">
@@ -98,14 +105,21 @@ const props = withDefaults(defineProps<Props>(), {
                         </div>
                       </div>
                     </template>
-                    <div class="flex-1">
-                      <input
+
+                    <div
+                      v-if="selectedItems.length === 0"
+                      class="h-full w-full cursor-pointer appearance-none bg-transparent p-1 px-2 text-slate-400 outline-none"
+                      @click="dropdown = true"
+                    >
+                      {{ props.placeholder }}
+                    </div>
+                    <!-- <input
                         :placeholder="
                           selectedItems.length === 0 ? props.placeholder : ''
                         "
                         class="h-full w-full appearance-none bg-transparent p-1 px-2 text-gray-800 outline-none placeholder:text-slate-400"
-                      />
-                    </div>
+                        @click="dropdown = true"
+                      /> -->
                   </div>
                   <div
                     class="flex w-8 items-center border-l border-gray-200 py-1 pl-2 pr-1 text-gray-300"
@@ -142,7 +156,7 @@ const props = withDefaults(defineProps<Props>(), {
           <DropDown
             v-if="dropdown"
             :list="items"
-            :width="width"
+            :width="props.width"
             @addItem="addTag"
           />
         </Transition>
