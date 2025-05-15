@@ -1,26 +1,22 @@
-/// <reference types="vitest" />
+// this is the main configuration file for vitest, in the project root
 
-import Vue from '@vitejs/plugin-vue'
-import { resolve } from 'path'
-import { defineConfig } from 'vite'
+import { defineConfig } from 'vitest/config'
+import react from '@vitejs/plugin-react'
+import { fileURLToPath, URL } from 'node:url'
 
 export default defineConfig({
-  plugins: [Vue()],
+  plugins: [react()],
   test: {
     globals: true,
     environment: 'jsdom',
-    setupFiles: ['./tests/unit/setup.ts'],
-    exclude: ['node_modules/**/*']
-    // transformMode: {
-    //   web: [/\.[jt]sx$/, /\.vue$/]
-    // }
+    setupFiles: './vitest.setup.ts',
   },
   resolve: {
-    alias: [{ find: '@', replacement: resolve(__dirname, 'src') }]
+    alias: [
+      {
+        find: '@',
+        replacement: fileURLToPath(new URL('./src', import.meta.url)),
+      },
+    ],
   },
-  define: {
-    __VUE_I18N_FULL_INSTALL__: true,
-    __VUE_I18N_LEGACY_API__: false,
-    __INTLIFY_PROD_DEVTOOLS__: false
-  }
 })
