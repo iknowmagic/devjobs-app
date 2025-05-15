@@ -27,7 +27,11 @@
     "noUncheckedSideEffectImports": true,
 
     /* vitest */
-    "types": ["vitest/globals", "@testing-library/jest-dom"]
+    "types": ["vitest/globals", "@testing-library/jest-dom"],
+
+    /* Additional options */
+    "resolveJsonModule": true,
+    "esModuleInterop": true
   },
   "include": ["src", "vitest.setup.ts"]
 }

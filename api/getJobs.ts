@@ -1,6 +1,17 @@
-import type { VercelRequest, VercelResponse } from '@vercel/node'
+import type { IncomingMessage, ServerResponse } from 'http'
 import jobsData from './data.json'
 import { JobsInterface, SingleJobInterface } from '../src/types'
+
+// Add types for request query parameters
+interface ExtendedIncomingMessage extends IncomingMessage {
+  query: {
+    search?: string
+    fullTime?: string
+    location?: string
+    page?: string
+    limit?: string
+  }
+}
 
 const paginator = (
   _data: SingleJobInterface[],
@@ -26,7 +37,10 @@ const paginator = (
   }
 }
 
-export default function handler(req: VercelRequest, res: VercelResponse) {
+export default function handler(
+  req: ExtendedIncomingMessage,
+  res: ServerResponse,
+) {
   let data: SingleJobInterface[] = [...jobsData]
 
   // Handle search
@@ -63,5 +77,6 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
   )
 
   res.setHeader('Content-Type', 'application/json')
-  res.status(200).json(result)
+  res.statusCode = 200
+  res.end(JSON.stringify(result))
 }
