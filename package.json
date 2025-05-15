@@ -4,9 +4,6 @@
   "version": "1.10.0",
   "private": false,
   "type": "module",
-  "engines": {
-    "node": ">=20.0.0"
-  },
   "author": {
     "name": "iknowmagic",
     "url": "https://github.com/iknowmagic"
