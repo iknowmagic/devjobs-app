@@ -1,4 +1,3 @@
-import React from 'react'
 import JobsList from './pages/JobsList'
 
 function App() {
