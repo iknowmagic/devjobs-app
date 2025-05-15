@@ -1,12 +1,11 @@
-import json from './data.json'
-
-import { JobsInterface, SingleJobInterface } from '../types'
-import { VercelRequest, VercelResponse } from '@vercel/node'
+import type { VercelRequest, VercelResponse } from '@vercel/node'
+import jobsData from './data.json'
+import { JobsInterface, SingleJobInterface } from '../src/types'
 
 const paginator = (
   _data: SingleJobInterface[],
   page: number,
-  limit: number
+  limit: number,
 ): JobsInterface => {
   const actualLimit = !+limit || +limit > 50 ? 50 : +limit
   const actualPage = +page || 1
@@ -16,39 +15,53 @@ const paginator = (
   const totalPages = Math.ceil(totalItems / actualLimit)
   const prevPage = actualPage > 1 ? actualPage - 1 : null
   const nextPage = totalPages > actualPage ? actualPage + 1 : null
+
   return {
     data,
     limit: actualLimit,
     totalPages,
     totalItems,
     prevPage,
-    nextPage
+    nextPage,
   }
 }
 
-export default (req: VercelRequest, res: VercelResponse) => {
-  let data: SingleJobInterface[]
+export default function handler(req: VercelRequest, res: VercelResponse) {
+  let data: SingleJobInterface[] = [...jobsData]
+
+  // Handle search
   if (typeof req.query.search === 'string') {
     const search = req.query.search.toLowerCase()
-    data = json.filter(item => {
+    data = data.filter((item) => {
       return (
         item.company.toLowerCase().includes(search) ||
         item.position.toLowerCase().includes(search)
       )
     })
-  } else {
-    data = json
   }
-  if (req.query.fullTime) {
+
+  // Handle fullTime filter
+  if (req.query.fullTime === 'true') {
     data = data.filter(
-      (item: SingleJobInterface) => item.contract.toLowerCase() === 'full time'
+      (item: SingleJobInterface) => item.contract.toLowerCase() === 'full time',
     )
   }
+
+  // Handle location filter
+  if (typeof req.query.location === 'string' && req.query.location !== '') {
+    const locationQuery = req.query.location.toLowerCase()
+    data = data.filter(
+      (item: SingleJobInterface) =>
+        item.location.toLowerCase() === locationQuery,
+    )
+  }
+
   const result = paginator(
     data,
     +(req.query.page || 1),
-    +(req.query.limit || 12)
+    +(req.query.limit || 12),
   )
+
   res.setHeader('Content-Type', 'application/json')
-  res.end(JSON.stringify(result))
+  res.status(200).json(result)
 }
