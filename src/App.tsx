@@ -1,10 +1,11 @@
-import Home from '@/pages/Home'
+import React from 'react'
+import JobsList from './pages/JobsList'
 
 function App() {
   return (
-    <>
-      <Home />
-    </>
+    <div className="app">
+      <JobsList />
+    </div>
   )
 }
 

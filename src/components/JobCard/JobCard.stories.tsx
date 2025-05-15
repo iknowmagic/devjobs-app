@@ -1,14 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import Home from './Home'
+import JobCard from './JobCard'
 
-const meta: Meta<typeof Home> = {
-  title: 'Components/Home',
-  component: Home,
+const meta: Meta<typeof JobCard> = {
+  title: 'Components/JobCard',
+  component: JobCard,
   tags: ['autodocs'],
 }
 export default meta
 
-type Story = StoryObj<typeof Home>
+type Story = StoryObj<typeof JobCard>
 
 export const Default: Story = {
   args: {
