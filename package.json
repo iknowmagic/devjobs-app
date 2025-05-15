@@ -31,9 +31,6 @@
   "bugs": {
     "url": "https://github.com/iknowmagic/reactcraft/issues"
   },
-  "engines": {
-    "node": ">=18.0.0"
-  },
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
