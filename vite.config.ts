@@ -14,5 +14,10 @@ export default defineConfig({
       },
     ],
   },
+  // Disable HMR when using Vercel dev
+  server: {
+    // eslint-disable-next-line no-undef
+    hmr: process.env.VERCEL ? false : true,
+  },
   assetsInclude: ['**/*.html'],
 })

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useJobsStore } from '../../store/jobsStore'
+import { FaSearch, FaMapMarkerAlt, FaFilter } from 'react-icons/fa'
 
 export const SearchBar: React.FC = () => {
   const { filters, setFilter, fetchJobs, fetchLocations, locations } =
@@ -23,65 +24,41 @@ export const SearchBar: React.FC = () => {
     fetchJobs()
   }
 
-  return (
-    <form
-      onSubmit={handleSubmit}
-      className="z-10 relative bg-base-100 shadow-md mx-4 md:mx-10 lg:mx-40 -mt-8 rounded-lg"
-    >
-      <div className="flex md:flex-row flex-col">
-        {/* Title/Company Search */}
-        <div className="flex flex-1 items-center p-4 md:border-r border-b border-base-300 md:border-b-0">
-          <svg
-            className="mr-4 w-6 h-6 text-primary"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-            />
-          </svg>
-          <input
-            type="text"
-            placeholder="Filter by title, companies..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="bg-transparent focus:outline-none w-full"
-          />
-        </div>
+  const applyFilters = () => {
+    setFilter('search', searchTerm)
+    setFilter('location', location)
+    setFilter('fullTime', fullTime)
+    fetchJobs()
+    setIsExpanded(false)
+  }
 
-        {/* Desktop filters */}
-        <div className="hidden md:flex md:flex-row flex-1">
+  return (
+    <div className="z-10 relative -mt-6 md:-mt-8 px-4 md:px-10 lg:px-40">
+      <form
+        onSubmit={handleSubmit}
+        className="bg-base-100 shadow-md rounded-lg overflow-hidden"
+      >
+        {/* Desktop Layout */}
+        <div className="hidden md:flex divide-x divide-base-200">
+          {/* Title/Company Search */}
+          <div className="flex flex-1 items-center p-6">
+            <FaSearch className="mr-4 w-5 h-5 text-primary" />
+            <input
+              type="text"
+              placeholder="Filter by title, company..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="bg-transparent focus:outline-none w-full text-base"
+            />
+          </div>
+
           {/* Location Filter */}
-          <div className="flex flex-1 items-center p-4 border-r border-base-300">
-            <svg
-              className="mr-4 w-6 h-6 text-primary"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-              />
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-              />
-            </svg>
+          <div className="flex flex-1 items-center p-6">
+            <FaMapMarkerAlt className="mr-4 w-5 h-5 text-primary" />
             <select
               value={location}
               onChange={(e) => setLocation(e.target.value)}
-              className="bg-transparent focus:outline-none w-full"
+              className="bg-transparent focus:outline-none w-full text-base appearance-none cursor-pointer"
             >
               <option value="">Filter by location...</option>
               {locations.map((loc) => (
@@ -93,89 +70,87 @@ export const SearchBar: React.FC = () => {
           </div>
 
           {/* Full Time Filter and Search Button */}
-          <div className="flex flex-1 justify-between items-center p-4">
-            <div className="flex items-center">
+          <div className="flex flex-1 justify-between items-center gap-4 p-6">
+            <label className="flex items-center gap-3 cursor-pointer">
               <input
                 type="checkbox"
-                id="fullTime"
                 checked={fullTime}
                 onChange={(e) => setFullTime(e.target.checked)}
-                className="mr-3 checkbox checkbox-primary"
+                className="checkbox checkbox-primary"
               />
-              <label htmlFor="fullTime" className="font-medium text-sm">
-                Full Time Only
-              </label>
-            </div>
-            <button type="submit" className="btn btn-primary">
+              <span className="font-bold text-base">Full Time Only</span>
+            </label>
+            <button type="submit" className="px-8 text-base btn btn-primary">
               Search
             </button>
           </div>
         </div>
 
-        {/* Mobile filter toggle */}
-        <div className="md:hidden flex justify-between items-center p-4">
+        {/* Mobile Layout */}
+        <div className="md:hidden flex items-center p-4">
+          <input
+            type="text"
+            placeholder="Filter by title..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="flex-1 bg-transparent mr-2 focus:outline-none"
+          />
           <button
             type="button"
             onClick={() => setIsExpanded(!isExpanded)}
-            className="btn btn-ghost btn-sm"
+            className="btn btn-ghost btn-circle"
           >
-            <svg
-              className="w-5 h-5"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
-              />
-            </svg>
-            <span className="ml-2">Filter</span>
+            <FaFilter className="text-primary" />
           </button>
-          <button type="submit" className="btn btn-primary btn-sm">
-            Search
+          <button type="submit" className="ml-2 btn btn-primary btn-circle">
+            <FaSearch />
           </button>
         </div>
-      </div>
 
-      {/* Mobile expanded filters */}
-      {isExpanded && (
-        <div className="md:hidden p-4 border-t border-base-300">
-          <div className="mb-4">
-            <label className="block mb-2 font-medium text-sm">Location</label>
-            <select
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
-              className="w-full select-bordered select"
-            >
-              <option value="">All Locations</option>
-              {locations.map((loc) => (
-                <option key={loc} value={loc}>
-                  {loc}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div>
-            <div className="flex items-center">
-              <input
-                type="checkbox"
-                id="mobile-fullTime"
-                checked={fullTime}
-                onChange={(e) => setFullTime(e.target.checked)}
-                className="mr-3 checkbox checkbox-primary"
-              />
-              <label htmlFor="mobile-fullTime" className="font-medium text-sm">
-                Full Time Only
+        {/* Mobile Expanded Filters */}
+        {isExpanded && (
+          <div className="md:hidden bg-base-100 p-4 border-t border-base-200">
+            <div className="mb-4">
+              <div className="flex items-center pb-2 border-b border-base-200">
+                <FaMapMarkerAlt className="mr-3 w-4 h-4 text-primary" />
+                <select
+                  value={location}
+                  onChange={(e) => setLocation(e.target.value)}
+                  className="bg-transparent focus:outline-none w-full appearance-none"
+                >
+                  <option value="">Filter by location...</option>
+                  {locations.map((loc) => (
+                    <option key={loc} value={loc}>
+                      {loc}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-4">
+              <label className="flex items-center gap-3 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={fullTime}
+                  onChange={(e) => setFullTime(e.target.checked)}
+                  className="checkbox checkbox-primary"
+                />
+                <span className="font-bold">Full Time Only</span>
               </label>
+
+              <button
+                type="button"
+                onClick={applyFilters}
+                className="w-full btn btn-primary"
+              >
+                Apply Filters
+              </button>
             </div>
           </div>
-        </div>
-      )}
-    </form>
+        )}
+      </form>
+    </div>
   )
 }
 

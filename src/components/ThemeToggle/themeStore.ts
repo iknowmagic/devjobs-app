@@ -2,18 +2,11 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
 // Theme constants
-export const THEME_LIGHT = 'reactcraft-light'
-export const THEME_DARK = 'reactcraft-dark'
+export const THEME_LIGHT = 'light'
+export const THEME_DARK = 'dark'
 export const THEME_SYSTEM = 'system'
 
-export const AVAILABLE_THEMES = [
-  'light',
-  'dark',
-  'retro',
-  'cupcake',
-  THEME_LIGHT,
-  THEME_DARK,
-] as const
+export const AVAILABLE_THEMES = [THEME_LIGHT, THEME_DARK] as const
 
 export type Theme = (typeof AVAILABLE_THEMES)[number] | typeof THEME_SYSTEM
 

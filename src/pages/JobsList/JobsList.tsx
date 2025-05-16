@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { useJobsStore } from '../../store/jobsStore'
+import { SingleJobInterface } from '../../types'
+import { motion } from 'framer-motion'
+
+// Components
+import Header from '../../components/Header'
 import SearchBar from '../../components/SearchBar'
 import JobCard from '../../components/JobCard'
 import JobModal from '../../components/JobModal'
-import { SingleJobInterface } from '../../types'
-import Navbar from '../../components/Navbar'
+import LoadingState from '../../components/LoadingState'
+import EmptyState from '../../components/EmptyState'
 
 const JobsList: React.FC = () => {
   const { jobs, isLoading, error, fetchJobs, loadMore } = useJobsStore()
@@ -26,32 +31,30 @@ const JobsList: React.FC = () => {
     setIsModalOpen(false)
   }
 
-  return (
-    <div className="bg-base-200 min-h-screen">
-      {/* Header with background */}
-      <div className="flex justify-between items-start bg-primary px-6 py-8 h-40">
-        <div className="text-primary-content">
-          <h1 className="font-bold text-2xl">DevJobs</h1>
-        </div>
+  // Calculate container animations for staggered children
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  }
 
-        {/* Theme toggle from your existing components */}
-        <div className="flex items-center">
-          <Navbar />
-        </div>
-      </div>
+  return (
+    <div className="flex flex-col bg-base-200 min-h-screen">
+      {/* Header */}
+      <Header />
 
       {/* Search bar */}
       <SearchBar />
 
-      <div className="mx-auto px-4 py-12 container">
-        {isLoading && !jobs && (
-          <div className="flex justify-center">
-            <span className="text-primary loading loading-spinner loading-lg"></span>
-          </div>
-        )}
-
+      {/* Main content */}
+      <main className="flex-grow px-4 md:px-10 lg:px-40 py-8 md:py-16">
+        {/* Error state */}
         {error && (
-          <div className="mx-auto max-w-md alert alert-error">
+          <div className="shadow-md mx-auto mt-8 max-w-md text-error-content alert alert-error">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="stroke-current w-6 h-6 shrink-0"
@@ -69,27 +72,33 @@ const JobsList: React.FC = () => {
           </div>
         )}
 
-        {jobs && jobs.data.length === 0 && (
-          <div className="py-12 text-center">
-            <h2 className="font-semibold text-xl">No jobs found</h2>
-            <p className="mt-2 text-base-content/70">
-              Try adjusting your search filters
-            </p>
-          </div>
-        )}
+        {/* Loading state */}
+        {isLoading && !jobs && <LoadingState />}
 
+        {/* Empty state */}
+        {jobs && jobs.data.length === 0 && <EmptyState />}
+
+        {/* Jobs grid */}
         {jobs && jobs.data.length > 0 && (
           <>
-            <div className="gap-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mb-12">
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+              className="gap-x-6 gap-y-16 md:gap-y-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+            >
               {jobs.data.map((job) => (
                 <JobCard key={job.id} job={job} onClick={handleJobClick} />
               ))}
-            </div>
+            </motion.div>
 
+            {/* Load more */}
             {jobs.nextPage && (
-              <div className="flex justify-center mt-8">
-                <button
-                  className="btn btn-primary"
+              <div className="flex justify-center mt-12">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="px-8 btn btn-primary"
                   onClick={loadMore}
                   disabled={isLoading}
                 >
@@ -99,14 +108,22 @@ const JobsList: React.FC = () => {
                       Loading...
                     </>
                   ) : (
-                    'Load More'
+                    'Load More Jobs'
                   )}
-                </button>
+                </motion.button>
               </div>
             )}
           </>
         )}
-      </div>
+      </main>
+
+      {/* Footer */}
+      <footer className="py-6 text-sm text-base-content/60 text-center">
+        <p>
+          © {new Date().getFullYear()} DevJobs App • Find your next developer
+          job
+        </p>
+      </footer>
 
       {/* Job details modal */}
       {selectedJob && (
