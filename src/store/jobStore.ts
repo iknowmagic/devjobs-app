@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { create } from 'zustand'
 
 // Types
@@ -52,10 +53,10 @@ interface JobStore {
   fetchJobs: () => Promise<void>
   fetchLocations: () => Promise<void>
   loadMore: () => Promise<void>
-  selectJob: (_job: Job | null) => void
-  setFilter: (_key: keyof JobFilters, _value: string | boolean) => void
+  selectJob: (job: Job | null) => void
+  setFilter: (key: keyof JobFilters, value: string | boolean) => void
   resetFilters: () => void
-  setShowJobModal: (_show: boolean) => void
+  setShowJobModal: (show: boolean) => void
 }
 
 const initialFilters: JobFilters = {
@@ -64,39 +65,11 @@ const initialFilters: JobFilters = {
   fullTimeOnly: false,
 }
 
-// API functions
-async function apiGetJobs(
-  filters: JobFilters,
-  page: number,
-  limit: number,
-): Promise<JobsResponse> {
-  const params = new URLSearchParams()
-
-  if (filters.search) params.append('search', filters.search)
-  if (filters.location) params.append('location', filters.location)
-  if (filters.fullTimeOnly) params.append('fullTime', 'true')
-
-  params.append('page', page.toString())
-  params.append('limit', limit.toString())
-
-  const response = await fetch(`/api/jobs?${params.toString()}`)
-
-  if (!response.ok) {
-    throw new Error('Failed to fetch jobs')
-  }
-
-  return response.json()
-}
-
-async function apiGetLocations(): Promise<string[]> {
-  const response = await fetch('/api/locations')
-
-  if (!response.ok) {
-    throw new Error('Failed to fetch locations')
-  }
-
-  return response.json()
-}
+// Import API functions from the service
+import {
+  getJobs as apiGetJobs,
+  getLocations as apiGetLocations,
+} from '../services/apiService'
 
 export const useJobStore = create<JobStore>((set, get) => ({
   // Initial state

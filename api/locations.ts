@@ -1,4 +1,4 @@
-import type { IncomingMessage, ServerResponse } from 'http'
+import { IncomingMessage, ServerResponse } from 'http'
 import jobsData from './data.json'
 
 export default function handler(req: IncomingMessage, res: ServerResponse) {

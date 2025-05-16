@@ -1,5 +1,5 @@
-import type { IncomingMessage, ServerResponse } from 'http'
-import jobsData from './data.json'
+import { IncomingMessage, ServerResponse } from 'http'
+import jobsData from '../api/data.json'
 import { parse } from 'url'
 
 interface JobRequirements {
@@ -56,7 +56,8 @@ const paginate = (data: Job[], page: number, limit: number): JobsResponse => {
 
 export default function handler(req: IncomingMessage, res: ServerResponse) {
   // Parse URL and query parameters
-  const { query } = parse(req.url || '', true)
+  const parsedUrl = parse(req.url || '', true)
+  const query = parsedUrl.query
 
   // Get query parameters with default values
   const search = ((query.search as string) || '').toLowerCase()
