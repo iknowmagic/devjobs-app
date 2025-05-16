@@ -9,15 +9,15 @@
   default: true;
   prefersdark: false;
   color-scheme: 'light';
-  --color-primary: #5964e0;
+  --color-primary: hsl(235, 69%, 61%);
   --color-primary-content: #ffffff;
-  --color-secondary: #9e7f66;
+  --color-secondary: hsl(235, 68%, 42%);
   --color-secondary-content: #ffffff;
-  --color-accent: #f4a261;
+  --color-accent: hsl(353, 100%, 78%);
   --color-accent-content: #ffffff;
   --color-base-100: #ffffff;
-  --color-base-200: #f4f6f8;
-  --color-base-300: #eaecf0;
+  --color-base-200: #f5f6f8;
+  --color-base-300: #e8e8ea;
   --color-base-content: #19202d;
   --color-info: #3abff8;
   --color-info-content: #002b3d;
@@ -27,13 +27,13 @@
   --color-warning-content: #382800;
   --color-error: #f87272;
   --color-error-content: #470000;
-  --rounded-box: 0.5rem;
+  --rounded-box: 0.75rem;
   --rounded-btn: 0.5rem;
   --rounded-badge: 1.9rem;
   --animation-btn: 0.25s;
   --animation-input: 0.2s;
   --padding-card: 2rem;
-  --btn-text-case: uppercase;
+  --btn-text-case: none;
   --btn-focus-scale: 0.95;
   --border-btn: 1px;
   --tab-border: 1px;
@@ -45,11 +45,11 @@
   default: false;
   prefersdark: true;
   color-scheme: 'dark';
-  --color-primary: #5964e0;
+  --color-primary: hsl(235, 69%, 61%);
   --color-primary-content: #ffffff;
-  --color-secondary: #9e7f66;
+  --color-secondary: hsl(235, 68%, 42%);
   --color-secondary-content: #ffffff;
-  --color-accent: #f4a261;
+  --color-accent: hsl(353, 100%, 78%);
   --color-accent-content: #ffffff;
   --color-base-100: #19202d;
   --color-base-200: #121721;
@@ -63,32 +63,32 @@
   --color-warning-content: #382800;
   --color-error: #f87272;
   --color-error-content: #470000;
-  --rounded-box: 0.5rem;
+  --rounded-box: 0.75rem;
   --rounded-btn: 0.5rem;
   --rounded-badge: 1.9rem;
   --animation-btn: 0.25s;
   --animation-input: 0.2s;
   --padding-card: 2rem;
-  --btn-text-case: uppercase;
+  --btn-text-case: none;
   --btn-focus-scale: 0.95;
   --border-btn: 1px;
   --tab-border: 1px;
   --tab-radius: 0.5rem;
 }
 
-*,
-*:before,
-*:after {
-  box-sizing: border-box;
+/* Custom global styles */
+
+body {
+  font-family:
+    'Kumbh Sans',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    sans-serif;
 }
 
-/* Custom style overrides */
-.btn-primary {
-  text-transform: none;
-  font-weight: 700;
-}
-
-/* Custom transitions for theme changes */
+/* Theme transition styles */
 body,
 .bg-base-100,
 .bg-base-200,
@@ -97,4 +97,48 @@ body,
   transition:
     background-color 0.3s ease,
     color 0.3s ease;
+}
+
+/* Custom button styles */
+.btn-primary {
+  font-weight: 700;
+}
+
+/* Custom checkbox styles */
+.checkbox-primary:checked {
+  background-size: 65%;
+}
+
+/* Custom select styles */
+select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%235964E0'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+  background-position: right 0.5rem center;
+  background-repeat: no-repeat;
+  background-size: 1.5em 1.5em;
+  padding-right: 2.5rem;
+}
+
+/* Add font weight utilities */
+.font-medium {
+  font-weight: 500;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-base-200);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-base-300);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary);
 }

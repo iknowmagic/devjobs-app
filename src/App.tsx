@@ -1,11 +1,12 @@
 import { useEffect } from 'react'
-import JobsList from './pages/JobsList'
-import { useThemeStore } from './components/ThemeToggle/themeStore'
+import { useThemeStore } from './store/themeStore'
+import Layout from './components/Layout'
+import JobBoard from './components/JobBoard'
 
 function App() {
   const { theme } = useThemeStore()
 
-  // Set initial theme
+  // Apply theme when component mounts or theme changes
   useEffect(() => {
     if (theme) {
       document.documentElement.setAttribute('data-theme', theme)
@@ -13,9 +14,9 @@ function App() {
   }, [theme])
 
   return (
-    <div className="app">
-      <JobsList />
-    </div>
+    <Layout>
+      <JobBoard />
+    </Layout>
   )
 }
 
